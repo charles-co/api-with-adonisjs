@@ -24,12 +24,23 @@ class ClientSeeder {
         await client.roles().attach([role.id])
       })
     )
+    const testclient = await User.create({
+        name: 'Marylyn',
+        surname: 'Cavalcanti',
+        email: 'marylyn@gmail.com',
+        password: 'secret',
+        mobile: '+2347039094842'
+    })
+    await console.log(testclient)
+    await console.log(clients)
+    await testclient.roles().attach([role.id])
 
     const user = await User.create({
-      name: 'Felipe',
-      surname: 'Cavalcanti',
-      email: 'felipe@faker.com',
-      password: 'secret'
+      name: 'John',
+      surname: 'Johnson',
+      email: 'admin@admin.com',
+      password: 'secret',
+      mobile: '+2347039094842'
     })
     const adminRole = await Role.findBy('slug', 'admin')
     //await console.log(user)

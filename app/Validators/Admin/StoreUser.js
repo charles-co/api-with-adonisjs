@@ -15,7 +15,6 @@ class AdminStoreUser {
     return {
       // validation rules
       email: rule,
-      image_id: 'exists:images,id'
       
     }
   }

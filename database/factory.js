@@ -20,21 +20,16 @@ Factory.blueprint('App/Models/User', (faker) => {
     surname: faker.last(),
     email: faker.email({ domain: 'fakemail.com'}),
     password: 'secret',
+    mobile: faker.phone()
   }
-})
-
-Factory.blueprint('App/Models/Category', (faker) => {
-    return {
-      title: faker.country({ full: true }),
-      description: faker.sentence()
-    }
 })
   
 Factory.blueprint('App/Models/Product', (faker) => {
     return {
       name: faker.animal(),
       description: faker.sentence(),
-      price: faker.floating({ min: 0, max: 1000, fixed: 2})
+      price: faker.floating({ min: 0, max: 1000, fixed: 2}),
+      image_url: faker.avatar({protocol: 'https'})
   
     }
 })

@@ -1,7 +1,7 @@
 'use strict'
 
 const BumblebeeTransformer = use('Bumblebee/Transformer')
-const ImageTransformer = use('App/Transformers/Admin/ImageTransformer')
+const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 /**
  * UserTransformer class
@@ -10,10 +10,6 @@ const ImageTransformer = use('App/Transformers/Admin/ImageTransformer')
  * @constructor
  */
 class UserTransformer extends BumblebeeTransformer {
-  
-  defaultInclude() {
-    return ['image']
-  }
   /**
    * This method is used to transform the data.
    */
@@ -25,10 +21,6 @@ class UserTransformer extends BumblebeeTransformer {
      email: model.email,
      id: model.id
     }
-  }
-
-  includeImage(model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
   }
 }
 

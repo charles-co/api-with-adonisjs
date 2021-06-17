@@ -12,24 +12,14 @@ class Order extends Model {
         this.addHook('afterPaginate', 'OrderHook.updateCollectionValues')
     }
 
-     // Relationship between Order and User
-     user() {
+    // Relationship between Order and User
+    user() {
         return this.belongsTo('App/Models/User', 'user_id', 'id')
-    }
-
-    // Relationship between Orders and Coupons
-    coupons() {
-        return this.belongsToMany('App/Models/Coupon')
     }
 
     // Relationship between Order and Items
     items() {
-        return this.hasMany('App/Models/Order')
-    }
-
-    // Relationship between Order and Discounts
-    discounts() {
-        return this.hasMany('App/Models/Discount')
+        return this.hasMany('App/Models/OrderItem')
     }
 }
 

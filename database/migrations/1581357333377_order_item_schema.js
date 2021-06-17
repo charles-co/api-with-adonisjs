@@ -8,7 +8,7 @@ class OrderItemSchema extends Schema {
     this.create('order_items', (table) => {
       table.increments()
       table.decimal('subtotal', 12, 2).defaultTo(0.0)
-      table.integer('quantity').unsigned()
+      table.integer('quantity').defaultTo(1).unsigned()
 
       table.integer('product_id').unsigned()
       table.integer('order_id').unsigned()

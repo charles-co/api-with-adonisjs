@@ -36,5 +36,5 @@ Route.group(() => {
     .as('auth.reset')
     .middleware(['guest'])
 })
-.prefix('v1/auth')
+.prefix('api/auth')
 .namespace('Auth')

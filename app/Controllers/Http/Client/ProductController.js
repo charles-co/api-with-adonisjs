@@ -5,7 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Product = use('App/Models/Product')
-const Transformer = use('App/Transformers/Admin/ProductTransformer')
+const Transformer = use('App/Transformers/ProductTransformer')
 
 /**
  * Resourceful controller for interacting with products
@@ -48,7 +48,7 @@ class ProductController {
    */
   async show ({ params: { id }, request, response, transform }) {
     const result = await Product.findOrFail(id)
-    const product = await transform.item(result, Transformer)
+    const product = await transform.item(result, 'ProductTransformer.withDescription')
 
     return response.send(product)
   } 

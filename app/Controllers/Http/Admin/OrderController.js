@@ -5,8 +5,6 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Order = use('App/Models/Order')
-const Coupon = use('App/Models/Coupon')
-const Discount = use('App/Models/Discount')
 const Database = use('Database')
 const Service = use('App/Services/Order/OrderService')
 const Transformer = use('App/Transformers/Admin/OrderTransformer')
@@ -96,7 +94,7 @@ class OrderController {
 
     let order = await Order.findOrFail(id)
     order = await transform
-      .include('user,items,discounts')
+      .include('user,items')
       .item(order, Transformer)
 
     return response.send(order)
@@ -128,7 +126,7 @@ class OrderController {
       await order.save(trx)
       await trx.commit()
       order = await transform
-        .include('user,items,discounts,coupons')
+        .include('user,items')
         .item(order, Transformer)
       
       return response.send(order)
@@ -157,7 +155,6 @@ class OrderController {
 
     try {
       await order.items().delete(trx)
-      await order.coupons().delete(trx)
       await order.delete(trx)
       await trx.commit()
 
@@ -171,78 +168,6 @@ class OrderController {
       })  
     }
   }
-
-  /**
-   * Apply a discount to an order with id.
-   * POST Method
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {TransformWith} ctx.transform
-   */
-  async applyDiscount ({ params: { id }, request, response, transform }) {
-
-    const { code } = request.all()
-    const coupon = Coupon.findByOrFail('code', code.toUpperCase())
-    let order = Order.findOrFail(id)
-
-    let discount = {}, 
-    info = {}
-
-    // Start Service Layer
-    try {
-      const service = new Service(order)
-      const orderDiscounts = await order.coupons().getCount()
-      const canAddDiscount = await service.canApplyDiscount()
-      const canApplyToOrder = orderDiscounts < 1 || (orderDiscounts >= 1 && coupon.recursive)
-
-      if(canAddDiscount && canApplyToOrder) {
-        discount = Discount.findOrCreate({
-          order_id: order.id,
-          coupon_id: coupon.id
-        })
-        info.message = 'Cupom aplicado com sucesso!'
-        info.success = true
-      } else {
-        info.message = 'Falha ao aplicar o cupom!'
-        info.success = false
-      }
-
-      order = await transform
-        .include('user,items,discounts,coupons')
-        .item(order, Transformer)
-
-      return response.send({ order, info })
-
-    } catch (error) {
-      return response.status(400).send({
-        message: "Erro ao aplicar o cupom."
-      })
-    }
-    
-  }
-
-   /**
-   * Remove a discount to an order with discount_id.
-   * DELETE Method
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-
-  async removeDiscount ({ request, response }) {
-
-    const { discount_id } = request.all()
-    const discount = await Discount.findOrFail(discount_id)
-    await discount.delete()
-
-    return response.status(204).send()
-
-  }
-
-
 }
 
 module.exports = OrderController

@@ -1,7 +1,7 @@
 'use strict'
 
+const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 const BumblebeeTransformer = use('Bumblebee/Transformer')
-const ImageTransformer = use('App/Transformers/Admin/ImageTransformer')
 
 /**
  * ProductTransformer class
@@ -11,25 +11,23 @@ const ImageTransformer = use('App/Transformers/Admin/ImageTransformer')
  */
 class ProductTransformer extends BumblebeeTransformer {
 
-  defaultInclude() {
-    return ['image']
-  }
-
   /**
    * This method is used to transform the data.
    */
   transform (model) {
     return {
      // add your transformation object here
-     id: model.id,
-     name: model.name,
-     description: model.description,
-     price: model.price,
+        id: model.id,
+        name: model.name,
+        price: model.price,
+        image_url: model.image_url
     }
   }
-
-  includeImage(model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
+  transformWithDescription (model) {
+      return{
+          ...this.transform(model),
+          description: model.description
+        }
   }
 }
 

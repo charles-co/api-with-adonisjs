@@ -52,10 +52,9 @@ class UserController {
     try {
       const userData = request.only([
         'name',
-        'username',
         'email',
         'password',
-        'image_id'
+        'mobile'
       ])
   
       let user = await User.create(userData)
@@ -105,7 +104,7 @@ class UserController {
         'surname',
         'email',
         'password',
-        'image_id'
+        'mobile'
       ])
       user.merge(userData)
       await user.save()

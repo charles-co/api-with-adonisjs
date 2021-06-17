@@ -16,24 +16,21 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-/**
- * Retorna o usuário logado atualmente
- */
 Route.get('v1/me', 'UserController.me')
   .as('me')
   .middleware('auth')
 
 /**
- * Importa as rotas de autenticação
+ * Import Authentication route
  */
 require('./auth')
 
 /**
- * Importa as rotas de Admin
+ * Import Admin route
  */
 require('./admin')
 
 /**
- * Importa as rotas de Clientes
+ * Import Client route
  */
 require('./client')

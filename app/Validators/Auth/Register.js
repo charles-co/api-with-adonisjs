@@ -7,19 +7,20 @@ class AuthRegister {
       name: 'required',
       surname: 'required',
       email: 'required|email|unique:users,email',
-      password: 'required|confirmed'
+      password: 'required|confirmed',
+      mobile: 'required'
     }
   }
 
   get messages() {
     return {
-      'name.required': 'O campo nome é obrigatório.',
-      'surname.required': 'O campo sobrenome é obrigatório.',
-      'email.required': 'O campo e-mail é obrigatório.',
-      'email.email': 'O campo e-mail está inválido.',
-      'email.unique': 'O campo e-mail já está em uso no sistema.',
-      'password.required': 'O campo senha é obrigatório.',
-      'password.confirmed': 'As senhas não são iguais.',
+      'name.required': 'Name is required.',
+      'surname.required': 'Surname is required.',
+      'email.required': 'Email is required.',
+      'email.email': 'Email is invalid.',
+      'email.unique': 'Email must be unique.',
+      'password.required': 'Password is required.',
+      'password.confirmed': 'Password don\'t match.',
     }
   }
 }

@@ -11,9 +11,9 @@ class AuthLogin {
 
   get messages() {
     return {
-      'email.required': 'O campo e-mail é obrigatório.',
-      'email.email': 'O campo e-mail está inválido.',
-      'password.required': 'O campo senha é obrigatório.',
+      'email.required': 'Email is required.',
+      'email.email': 'Email is invalid.',
+      'password.required': 'Password is required.',
     }
   }
 }
